@@ -132,42 +132,46 @@ public class TrainService {
         return oldest;
     }
 
-    public List<Integer> trainsBetweenAGivenTime(Station station, LocalTime startTime, LocalTime endTime){
+
+    public List<Integer>  trainsBetweenAGivenTime(Station station, LocalTime startTime, LocalTime endTime){
 
         //When you are at a particular station you need to find out the number of trains that will pass through a given station
         //between a particular time frame both start time and end time included.
         //You can assume that the date change doesn't need to be done ie the travel will certainly happen with the same date (More details
         //in problem statement)
         //You can also assume the seconds and milli seconds value will be 0 in a LocalTime format.
-      
+
         List<Integer> trainsBetweenTime = new ArrayList<>();
-        
-        List<Train>trains = trainRepository.findAll();
-        
-        for (Train train : trains){
+
+        List<Train> trains = trainRepository.findAll();
+
+
+        for (Train train :trains){
             String stations = train.getRoute();
-            String [] stationsList = stations.split(","); 
-            
-            for (int i =0; i< stationsList.length ; i++){
+            String[] stationsList = stations.split(",");
+
+            for (int i = 0;i<stationsList.length;i++){
                 int stationIndex = -1;
-                if (stationsList[i].equals(stations.toString())){
-                    stationIndex = i ;
+                if (stationsList[i].equals(station.toString())){
+                    stationIndex = i;
                     LocalTime trainTime = train.getDepartureTime().plusHours(i);
                     if ((trainTime.compareTo(startTime) == 1) && trainTime.compareTo(endTime) == -1){
                         trainsBetweenTime.add(train.getTrainId());
-                    } else if ((trainTime.compareTo(startTime) == 1) && trainTime.compareTo(endTime) == -1) {
-                        trainsBetweenTime.add(train.getTrainId());
-                        
-                    } else if ((trainTime.compareTo(startTime) == 0) || (trainTime.compareTo(endTime) == 0)) {
+                    }else if ((trainTime.compareTo(startTime) == 0) || (trainTime.compareTo(endTime) == 0)){
                         trainsBetweenTime.add(train.getTrainId());
                     }
                 }
-            }
-        }
-        
-        return trainsBetweenTime;
-    }
 
+            }
+
+
+        }
+
+//        int val = endTime.compareTo(startTime);
+
+        return trainsBetweenTime;
+//        return val;
+    }
     public int convertTimeToInt(LocalTime time){
         int timeToReturn = 0;
         if (!time.equals(null)){
