@@ -78,6 +78,7 @@ public class BookTicketEntryDto {
     }
 
     public void setBookingPersonId(Integer bookingPersonId) {
+
         this.bookingPersonId = bookingPersonId;
     }
 }
